@@ -13,20 +13,16 @@ class DirectoriesViewController: UIViewController, UITableViewDelegate, UITableV
     var files: [URL] = []
 
 
-    @IBOutlet weak var directoriesTableViewOutlet: UITableView!
+    @IBOutlet weak var directoriesTableView: UITableView!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        directoriesTableView.dataSource = self
+        directoriesTableView.delegate = self
 
-        let fileManager = FileManager.default
-        if let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {
-            do {
-                files = try fileManager.contentsOfDirectory(at: documentsDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
-            } catch {
-                print("An error occurred: \(error)")
-            }
-        }
+        updateDirectoryContents()
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -58,9 +54,23 @@ class DirectoriesViewController: UIViewController, UITableViewDelegate, UITableV
         let fileNumberString = String(fileNumber)
         
         FileManager.addFolder(folderName: fileNumberString)
-        directoriesTableViewOutlet.reloadData()
+        
+        updateDirectoryContents()
+        directoriesTableView.reloadData()
         
     }
+    
+    func updateDirectoryContents() {
+        let fileManager = FileManager.default
+        if let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {
+            do {
+                files = try fileManager.contentsOfDirectory(at: documentsDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+            } catch {
+                print("An error occurred: \(error)")
+            }
+        }
+    }
+
     
     
     

@@ -76,7 +76,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="directoriesTableViewOutlet" destination="7F2-M5-ct6" id="hPv-cS-pFy"/>
+                        <outlet property="directoriesTableView" destination="7F2-M5-ct6" id="hPv-cS-pFy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DIZ-mX-AdI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
