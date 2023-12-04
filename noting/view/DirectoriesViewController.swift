@@ -48,7 +48,15 @@ class DirectoriesViewController: UIViewController, UITableViewDelegate, UITableV
 
         return cell
     }
-
+    @IBAction func deleteButtonTapped(_ sender: Any) {
+        
+        fileNumber = 0
+        FileManager.deleteFolders()
+        updateDirectoryContents()
+        directoriesTableView.reloadData()
+        
+    }
+    
     @IBAction func addFileButtonTapped(_ sender: Any) {
         fileNumber += 1
         let fileNumberString = String(fileNumber)
@@ -64,7 +72,7 @@ class DirectoriesViewController: UIViewController, UITableViewDelegate, UITableV
         let fileManager = FileManager.default
         if let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {
             do {
-                files = try fileManager.contentsOfDirectory(at: documentsDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+                files = try fileManager.contentsOfDirectory(at: documentsDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles) .sorted() { $1.path > $0.path}
             } catch {
                 print("An error occurred: \(error)")
             }
